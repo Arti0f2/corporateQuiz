@@ -1,7 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from "react";
+import { getQuizzes } from "./api";
 
 function App() {
+  const [quizzes, setQuizzes] = useState([]);
+
+  useEffect(() => {
+    getQuizzes().then(data => setQuizzes(data));
+  }, []); 
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +26,14 @@ function App() {
           Learn React
         </a>
       </header>
+      <div>
+        <h1>Список вікторин</h1>
+        <ul>
+          {quizzes.map((quiz) => (
+            <li key={quiz.id}>{quiz.title}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
